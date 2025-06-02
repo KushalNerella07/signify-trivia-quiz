@@ -1,39 +1,54 @@
 # 🧠 Signify Trivia Quiz App
 
-A full-stack, Docker-ready trivia platform that lets users:
+A **full-stack, Docker-ready** trivia platform that lets users  
 
-1. pick a **category** (only those that really have questions)
-2. pick a **difficulty** (tabs appear dynamically per category)
-3. answer **paginated** questions one-by-one
-4. **shuffle** the quiz pool on demand
-5. get **instant scoring** on submission
+1. pick a _category_ (only those that actually have questions)  
+2. pick a _difficulty_ (tabs appear dynamically per category)  
+3. answer **one question per page** – with Back/Next navigation  
+4. _shuffle_ the quiz pool on demand  
+5. receive **instant, secure scoring** on submission  
 
-| Layer        | Tech Stack                                                |
-| ------------ | --------------------------------------------------------- |
-| **Frontend** | React 19 · Vite 6 · TypeScript 5 · MUI v7 · Redux Toolkit |
-| **Backend**  | Node 20 · Express 5 · TypeScript 5                        |
-| **Database** | MongoDB 6                                                 |
-| **Tooling**  | Jest 29 (+ RTL) · ESLint 9 · Docker 24                    |
+---
+
+## Tech Stack
+
+| Layer        | Tech / Version                                    |
+|--------------|---------------------------------------------------|
+| **Frontend** | React 19 &nbsp;·&nbsp; Vite 6 &nbsp;·&nbsp; TypeScript 5 &nbsp;·&nbsp; MUI 7 &nbsp;·&nbsp; Redux Toolkit |
+| **Backend**  | Node 20 &nbsp;·&nbsp; Express 5 &nbsp;·&nbsp; TypeScript 5 |
+| **Database** | MongoDB 6                                         |
+| **Tooling**  | Jest 29 (+ React Testing Library) · ESLint 9 · Docker 24 |
 
 ---
 
 ## 1 Project Highlights
 
-| Feature               | Detail                                                                                                    |
-| --------------------- | --------------------------------------------------------------------------------------------------------- |
-| **Category-aware**    | `/categories/meta` returns each category plus which difficulties are available.                           |
-| **Difficulty-aware**  | Tabs (`easy · medium · hard`) are rendered only if that category has data.                                |
-| **Pagination UX**     | One question per page. Answers are cached locally and POSTed once to `/quiz/score`.                       |
-| **Answer security**   | Correct answer is stored as a **SHA-256 hash**; the raw answer text never leaves the DB.                  |
-| **Type safety**       | Front + back share `CategoryMeta`, `Question`, `ScoreResult` interfaces → zero runtime shape drift.       |
-| **One-command setup** | `docker compose up --build` seeds Mongo, builds both images, wires Vite’s dev proxy to the API container. |
+| Feature              | Detail |
+|----------------------|--------|
+| **Category-aware**   | `/categories/meta` returns every category **plus** which difficulties exist. UI only shows tabs that are real. |
+| **Pagination UX**    | One question at a time. Answers cached locally → single POST to `/quiz/score`. |
+| **Answer security**  | Correct choice stored as SHA-256 hash; raw text never leaves DB. |
+| **Type-safety**      | Shared `CategoryMeta` / `Question` / `ScoreResult` interfaces across front & back. |
+| **One-command spin-up** | `docker compose up --build` seeds Mongo, builds both images, sets up Vite dev-proxy to the API container. |
+| **CI-ready tests**   | Pure **Jest + RTL** suites for key components; `npm run test` is green. |
 
 ---
 
-## 2 Quick Start ( Docker )
+## 2 Live Demo (local)
+
+| URL                        | Purpose |
+|----------------------------|---------|
+| `http://localhost:5173`    | Vite dev server (React UI) |
+| `http://localhost:8080`    | Express API root |
+| `GET /health`              | `{ "status": "ok" }` |
+
+---
+
+## 3 Getting Started
+
+### 3-A Docker (recommended)
 
 ```bash
-git clone https://github.com/YOUR_ORG/signify-quizapp.git
-cd signify-quizapp
-docker compose up --build
-```
+gh repo clone KushalNerella07/signify-trivia-quiz
+cd signify-trivia-quiz
+docker compose up --build        # seeds Mongo + runs both services
