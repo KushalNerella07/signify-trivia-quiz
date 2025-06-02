@@ -52,3 +52,40 @@ A **full-stack, Docker-ready** trivia platform that lets users
 gh repo clone KushalNerella07/signify-trivia-quiz
 cd signify-trivia-quiz
 docker compose up --build        # seeds Mongo + runs both services
+
+
+## 4 Scripts
+
+| Location   | Script          | What it does                         |
+| ---------- | --------------- | ------------------------------------ |
+| **client** | `npm run dev`   | Vite dev server + React fast-refresh |
+|            | `npm run build` | Production build to `dist/`          |
+|            | `npm run test`  | Jest + RTL component tests           |
+|            | `npm run lint`  | ESLint (`eslint .`)                  |
+| **server** | `npm run dev`   | ts-node watch (nodemon)              |
+|            | `npm run build` | `tsc` → `dist/`                      |
+|            | `npm run seed`  | import seed data into Mongo          |
+
+## 5 API Reference
+
+| Method | URL & Query                              | Body / Notes                              | Returns                                    |   |              |
+| ------ | ---------------------------------------- | ----------------------------------------- | ------------------------------------------ | - | ------------ |
+| `GET`  | `/health`                                | —                                         | `{ status: "ok" }`                         |   |              |
+| `GET`  | `/categories`                            | —                                         | `[ { apiId, name } ]`                      |   |              |
+| `GET`  | `/categories/meta`                       | —                                         | `[ { apiId, name, available: ["easy"] } ]` |   |              |
+| `GET`  | \`/quiz?category=<id>\&difficulty=\<easy | medium                                    | hard>\&amount=<n>\`                        | — | `Question[]` |
+| `POST` | `/quiz/score`                            | `{ answers: [ { questionId, answer } ] }` | `{ totalCorrect, results }`                |   |              |
+
+## 6 Folder Structure 
+.
+├── client/     # React front-end
+│   ├── src/
+│   ├── vite.config.ts
+│   └── ...
+├── server/     # Express API
+│   ├── src/
+│   ├── seed.ts
+│   └── ...
+├── docker-compose.yml
+└── README.md
+
