@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:6
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/trivia
+    depends_on:
+      - mongo
+    ports:
+      - "8080:8080"
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    environment:
+      - VITE_API_BASE=http://server:8080
+    depends_on:
+      - server
+    ports:
+      - "5173:5173"
+    working_dir: /app
+    command: ["npm", "run", "dev"]
+
+volumes:
+  mongo_data:

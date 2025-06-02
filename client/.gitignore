@@ -1,0 +1,31 @@
+# ───── Runtime artefacts ─────────────────────────────────────────────
+node_modules
+dist
+dist-ssr
+coverage
+*.log
+npm-debug.log*
+yarn-*.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.local
+
+# ───── Env / config files ───────────────────────────────────────────
+.env*
+.vitepress
+.next
+.turbo
+
+# ───── Editor junk ──────────────────────────────────────────────────
+.DS_Store
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ───── Docker ───────────────────────────────────────────────────────
+**/tmp/
